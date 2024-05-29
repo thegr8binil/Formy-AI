@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
       <ClerkProvider>
         <body
           className={cn(
-            "min-h-screen bg-background font-sans antialiased",
+            "h-screen bg-background font-sans antialiased w-screen overflow-x-hidden overflow-y-hidden",
             fontSans.variable
           )}
         >
