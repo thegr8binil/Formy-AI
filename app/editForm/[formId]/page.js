@@ -31,12 +31,24 @@ export default function EditForm({ params }) {
     setJsonData(jsonData);
     console.log(jsonData);
   };
+
+  const onFeildUpdate = (value,index) => {
+    
+  }
   return (
     <div className="p-10">
-        <h2 className="flex items-center gap-2 my-5 transition-all cursor-pointer hover:font-semibold" onClick={()=>router.back()}><ArrowLeft/>Back</h2>
+      <h2
+        className="flex items-center gap-2 my-5 transition-all cursor-pointer hover:font-semibold"
+        onClick={() => router.back()}
+      >
+        <ArrowLeft />
+        Back
+      </h2>
       <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
         <div className="p-5 border rounded-lg shadow-md">Controller</div>
-        <div className="h-full p-4 border rounded-lg md:col-span-2"><FormFields jsonData={jsonData}/></div>
+        <div className="h-full p-4 border rounded-lg md:col-span-2">
+          <FormFields jsonData={jsonData} onFeildUpdate={onFeildUpdate}/>
+        </div>
       </div>
     </div>
   );

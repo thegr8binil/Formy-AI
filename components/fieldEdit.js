@@ -5,8 +5,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useState } from "react";
+import { Button } from "./ui/button";
 
-export default function FieldEdit({ defaultValue }) {
+export default function FieldEdit({ defaultValue, onUpdate }) {
   const [label, setLabel] = useState();
   const [placeholder, setPlaceholder] = useState();
   return (
@@ -16,16 +17,36 @@ export default function FieldEdit({ defaultValue }) {
           <Edit />
         </PopoverTrigger>
         <PopoverContent>
-          <h2>Edit Field</h2>
+          <h2 className="pb-1 font-medium border-b">Edit Field</h2>
           <div>
             <label className="text-xs">Lable Name</label>
             <input
               type="text"
               defaultValue={defaultValue.label}
               onClick={(e) => setLabel(e.target.value)}
-              className="w-full p-2 mt-2 border rounded-lg"
+              className="w-full p-2 text-sm border rounded-lg"
             ></input>
           </div>
+          <div>
+            <label className="text-xs">Placeholder Name</label>
+            <input
+              type="text"
+              defaultValue={defaultValue.placeholder}
+              onClick={(e) => setPlaceholder(e.target.value)}
+              className="w-full p-2 text-sm border rounded-lg"
+            ></input>
+          </div>
+          <Button
+            className="flex items-end justify-end mt-2"
+            onClick={() =>
+              onUpdate({
+                label: label,
+                placeholder: placeholder,
+              })
+            }
+          >
+            Update
+          </Button>
         </PopoverContent>
       </Popover>
 

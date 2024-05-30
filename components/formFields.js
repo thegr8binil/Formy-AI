@@ -1,6 +1,7 @@
+import { validators } from "tailwind-merge";
 import FieldEdit from "./fieldEdit";
 
-export default function FormFields({ jsonData }) {
+export default function FormFields({ jsonData, onFeildUpdate}) {
   return (
     <div>
       <h1 className="text-2xl font-medium">{jsonData.formTitle}</h1>
@@ -68,7 +69,7 @@ export default function FormFields({ jsonData }) {
                 />
               )}
               <div className="flex items-end justify-end mt-2">
-                <FieldEdit defaultValue={field} />
+                <FieldEdit defaultValue={field} onUpdate={(value)=>onFeildUpdate(value,index)} />
               </div>
             </div>
           ))}
