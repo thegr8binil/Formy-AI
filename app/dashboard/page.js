@@ -11,15 +11,39 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { geminiAi } from "./geminiAi";
+import moment from "moment/moment";
+import { useUser } from "@clerk/nextjs";
+import { db } from "@/configs";
+import { forms } from "@/configs/schema";
 
 export default function Dashboard() {
   const [userInput, setUserInput] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { user } = useUser();
+  const promptForm =
+    "On the basis of description give form in json format with form title, form subheading with form having Form field, form name, placeholder name, and form label, field Type, field required In Json only the JSON is needed no other details";
 
-  const promptForm = "On the basis of description give form in json format with form title, form subheading with form having Form field, form name, placeholder name, and form label, field Type, field required In Json"
-  
-  const handleCreateForm = async() => {
-    const response = await geminiAi.sendMessage("Description: " + userInput + promptForm);
+  const handleCreateForm = async () => {
+    setLoading(true);
+    const result = await geminiAi.sendMessage(
+      "Description: " + userInput + promptForm
+    );
+    console.log(result.response.text());
+    if (result.response.text()) {
+      const resp = await db
+        .insert(forms)
+        .values({
+          jsonForm: result.response.text(),
+          createdBy: user?.primaryEmailAddress?.emailAddress,
+          createdAt: moment().format("YYYY-MM-DD HH:mm:ss"),
+        })
+        .returning({ id:forms.id });
+      console.log("new id" + resp[0].id);
+      setLoading(false);
+    }
+    setLoading(false);
+
     setIsDialogOpen(false);
   };
 
@@ -56,7 +80,9 @@ export default function Dashboard() {
                     >
                       Cancel
                     </Button>
-                    <Button onClick={handleCreateForm}>Create</Button>
+                    <Button onClick={handleCreateForm} disabled={loading}>
+                      Create
+                    </Button>
                   </div>
                 </div>
               </DialogDescription>
