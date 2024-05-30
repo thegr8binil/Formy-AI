@@ -8,8 +8,8 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 
 export default function FieldEdit({ defaultValue, onUpdate }) {
-  const [label, setLabel] = useState();
-  const [placeholder, setPlaceholder] = useState();
+  const [label, setLabel] = useState(defaultValue?.label);
+  const [placeholder, setPlaceholder] = useState(defaultValue.placeholder);
   return (
     <main className="flex items-center justify-center gap-2">
       <Popover>
