@@ -15,14 +15,17 @@ import moment from "moment/moment";
 import { useUser } from "@clerk/nextjs";
 import { db } from "@/configs";
 import { forms } from "@/configs/schema";
+import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Dashboard() {
   const [userInput, setUserInput] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
+  const route = useRouter();
   const promptForm =
-    "On the basis of description give form in json format with form title, form subheading with form having Form field, form name, placeholder name, and form label, field Type, field required In Json only the JSON is needed no other details";
+    "On the basis of description give form in json format with form title, form subheading with form having Form field, form name, placeholder name, and form label, field Type, field required In proper JSON format. Just the JSON format is enough dont add anything extra like explantion or any text";
 
   const handleCreateForm = async () => {
     setLoading(true);
@@ -38,8 +41,11 @@ export default function Dashboard() {
           createdBy: user?.primaryEmailAddress?.emailAddress,
           createdAt: moment().format("YYYY-MM-DD HH:mm:ss"),
         })
-        .returning({ id:forms.id });
+        .returning({ id: forms.id });
       console.log("new id" + resp[0].id);
+      if (resp[0].id) {
+        route.push("/editForm/" + resp[0].id);
+      }
       setLoading(false);
     }
     setLoading(false);
@@ -81,7 +87,11 @@ export default function Dashboard() {
                       Cancel
                     </Button>
                     <Button onClick={handleCreateForm} disabled={loading}>
-                      Create
+                      {loading ? (
+                        <Loader2 className="animate-spin" />
+                      ) : (
+                        "Create"
+                      )}
                     </Button>
                   </div>
                 </div>
