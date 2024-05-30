@@ -25,8 +25,7 @@ export default function Dashboard() {
   const { user } = useUser();
   const route = useRouter();
   const promptForm =
-    "On the basis of description give form in json format with form title, form subheading with form having Form field, form name, placeholder name, and form label, field Type, field required In proper JSON format. Just the JSON format is enough dont add anything extra like explantion or any text";
-
+    "On the basis of description give form in json format with form title as formTitle, form subheading as formSubheading, form name, placeholder name, and form label, field Type, field required In proper JSON format. Just the JSON format is enough dont add anything extra like explanation or any text or characters. give form feilds as formFields ";
   const handleCreateForm = async () => {
     setLoading(true);
     const result = await geminiAi.sendMessage(
