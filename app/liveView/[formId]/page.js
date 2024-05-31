@@ -25,11 +25,10 @@ export default function LiveView({ params }) {
   };
 
   return (
-    <div>
+    <div className="flex items-center justify-center">
       <FormFields
         jsonData={jsonData}
-        deleteFiled={console.log()}
-        onFeildUpdate={console.log()}
+        editable = {false}
       />
     </div>
   );
