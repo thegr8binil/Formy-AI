@@ -31,7 +31,6 @@ export default function Dashboard() {
     const result = await geminiAi.sendMessage(
       "Description: " + userInput + promptForm
     );
-    console.log(result.response.text());
     if (result.response.text()) {
       const resp = await db
         .insert(forms)
@@ -41,7 +40,6 @@ export default function Dashboard() {
           createdAt: moment().format("YYYY-MM-DD HH:mm:ss"),
         })
         .returning({ id: forms.id });
-      console.log("new id" + resp[0].id);
       if (resp[0].id) {
         route.push("/editForm/" + resp[0].id);
       }

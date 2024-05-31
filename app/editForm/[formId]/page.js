@@ -8,6 +8,7 @@ import { and, eq } from "drizzle-orm";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export default function EditForm({ params }) {
   const { user } = useUser();
@@ -46,7 +47,7 @@ export default function EditForm({ params }) {
       .update(forms)
       .set({ jsonForm:jsonData })
       .where(and(eq(forms.id,record.id),eq(forms.createdBy,user?.primaryEmailAddress?.emailAddress)));
-    console.log(updatedData);
+    toast("Form Updated Successfully");
   }
   const onFeildUpdate = (value, index) => {
     console.log(value.label);
@@ -61,6 +62,7 @@ export default function EditForm({ params }) {
     const newJsonData = jsonData.formFields.filter((field,fieldIndex)=>fieldIndex!==index);
     jsonData.formFields = newJsonData;
     setUpdateTrigger(Date.now());
+    toast("Field Deleted Successfully");
   }
   return (
     <div className="p-10">
