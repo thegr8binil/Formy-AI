@@ -56,6 +56,12 @@ export default function EditForm({ params }) {
     console.log(jsonData);
     setUpdateTrigger(Date.now());
   };
+
+  const deleteFiled = (index) => {
+    const newJsonData = jsonData.formFields.filter((field,fieldIndex)=>fieldIndex!==index);
+    jsonData.formFields = newJsonData;
+    setUpdateTrigger(Date.now());
+  }
   return (
     <div className="p-10">
       <h2
@@ -68,7 +74,7 @@ export default function EditForm({ params }) {
       <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
         <div className="p-5 border rounded-lg shadow-md">Controller</div>
         <div className="h-full p-4 border rounded-lg md:col-span-2">
-          <FormFields jsonData={jsonData} onFeildUpdate={onFeildUpdate} />
+          <FormFields jsonData={jsonData} onFeildUpdate={onFeildUpdate} deleteFiled={(index)=>deleteFiled(index)}/>
         </div>
       </div>
     </div>

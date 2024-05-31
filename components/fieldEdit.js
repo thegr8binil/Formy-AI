@@ -6,8 +6,19 @@ import {
 } from "@/components/ui/popover";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
-export default function FieldEdit({ defaultValue, onUpdate }) {
+export default function FieldEdit({ defaultValue, onUpdate,deleteFiled}) {
   const [label, setLabel] = useState(defaultValue?.label);
   const [placeholder, setPlaceholder] = useState(defaultValue.placeholder);
   return (
@@ -49,13 +60,24 @@ export default function FieldEdit({ defaultValue, onUpdate }) {
           </Button>
         </PopoverContent>
       </Popover>
-
-      <Popover>
-        <PopoverTrigger>
+      <AlertDialog>
+        <AlertDialogTrigger>
           <Trash className="text-red-500" />
-        </PopoverTrigger>
-        <PopoverContent>Delete</PopoverContent>
-      </Popover>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete your
+              account and remove your data from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction onClick={()=>deleteFiled()}>Continue</AlertDialogAction>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </main>
   );
 }
