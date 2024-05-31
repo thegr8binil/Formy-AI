@@ -4,9 +4,11 @@ import { Button } from "./ui/button";
 import { useUser } from "@clerk/nextjs";
 import { SignInButton, UserButton } from "@clerk/clerk-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 export default function NavBar() {
   const { user, isSignedIn } = useUser();
-  return (
+  const path = usePathname();
+  return !path.includes('liveView') &&(
     <nav className="pb-3 mx-8 mt-4 border-b shadow-sm">
       <ul className="flex items-center justify-between">
         <Link href="/">
